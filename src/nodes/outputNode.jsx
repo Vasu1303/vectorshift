@@ -1,8 +1,6 @@
-
-
 import { useState } from "react";
-
 import { BaseNode } from "../components/BaseNode";
+import { FileOutput } from "lucide-react";
 
 export const OutputNode = ({ id, data }) => {
   const [currName, setCurrName] = useState(
@@ -24,16 +22,26 @@ export const OutputNode = ({ id, data }) => {
       data={data}
       label="Output"
       inputs={[{ id: "value" }]}
-      style={{ height: 120 }}
+      
+      icon={<FileOutput size={18} className="mr-2" />}
     >
-      <div>
-        <label style={{ display: "block", marginBottom: "8px" }}>
+      <div className="flex flex-col gap-2">
+        <label className="flex flex-col">
           Name:
-          <input type="text" value={currName} onChange={handleNameChange} />
+          <input 
+            type="text" 
+            value={currName} 
+            onChange={handleNameChange}
+            className="border border-slate-500/35 rounded px-2 py-1 mt-1 w-full outline-none" 
+          />
         </label>
-        <label style={{ display: "block" }}>
+        <label className="flex flex-col">
           Type:
-          <select value={outputType} style={{ marginLeft: "2px" }} onChange={handleTypeChange}>
+          <select 
+            value={outputType} 
+            onChange={handleTypeChange}
+            className="border border-slate-500/35 rounded px-2 py-1 mt-1 w-full outline-none ml-0.5"
+          >
             <option value="Text">Text</option>
             <option value="Image">Image</option>
           </select>

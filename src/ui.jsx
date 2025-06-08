@@ -1,7 +1,3 @@
-// ui.js
-// Displays the drag-and-drop UI
-// --------------------------------------------------
-
 import { useState, useRef, useCallback } from 'react';
 import ReactFlow, { Controls, Background, MiniMap } from 'reactflow';
 import { useStore } from './store';
@@ -14,11 +10,9 @@ import { TranslateNode } from './newNodes/translateNode';
 import { EmailValidationNode } from './newNodes/validationNode';
 import { SummarizeNode } from './newNodes/summarizeNode';
 import { DetectLanguageNode } from './newNodes/detectLanguageNode';
-
-
-import 'reactflow/dist/style.css';
 import { HashtagNode } from './newNodes/hashtagNode';
-
+import { UpperCaseNode } from './newNodes/upperCaseNode';
+import 'reactflow/dist/style.css';
 
 
 const gridSize = 20;
@@ -33,6 +27,8 @@ const nodeTypes = {
   summarizer:SummarizeNode,
   languageDetector:DetectLanguageNode,
   hashtag: HashtagNode,
+  uppercase: UpperCaseNode,
+  
 
 
 };
@@ -105,7 +101,15 @@ export const PipelineUI = () => {
 
     return (
         <>
-        <div ref={reactFlowWrapper} style={{width: '100wv', height: '70vh'}}>
+        <div ref={reactFlowWrapper} className='w-full h-[72vh] relative'>
+            {nodes.length === 0 && (
+              <div className="absolute -top-28 inset-0 flex items-center justify-center z-10 pointer-events-none">
+                <div className="bg-white/90 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 rounded-lg shadow p-6 text-center">
+                  <div className="text-lg font-semibold text-slate-700 dark:text-slate-200 mb-1">Add nodes to start</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Drag a node from the toolbar above to begin building your workflow.</div>
+                </div>
+              </div>
+            )}
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -120,9 +124,9 @@ export const PipelineUI = () => {
                 snapGrid={[gridSize, gridSize]}
                 connectionLineType='smoothstep'
             >
-                <Background color="#aaa" gap={gridSize} />
+                <Background color="#888a89" gap={gridSize} />
                 <Controls />
-                <MiniMap />
+                <MiniMap nodeStrokeWidth={3}  />
             </ReactFlow>
         </div>
         </>

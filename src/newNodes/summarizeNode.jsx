@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { BaseNode } from "../components/BaseNode";
+import { FileText } from "lucide-react";
+
+import TextareaAutosize from "react-textarea-autosize";
 
 export const SummarizeNode = ({ id, data }) => {
   const [text, setText] = useState(data?.text || "");
-  const [level, setLevel] = useState(data?.level || 'Short');
+  const [level, setLevel] = useState(data?.level || "Short");
   const [isProcessing, setIsProcessing] = useState(false);
   const [charCount, setCharCount] = useState(0);
 
@@ -19,13 +22,13 @@ export const SummarizeNode = ({ id, data }) => {
   };
 
   const handleSummarize = async () => {
-  setIsProcessing(true);
-  try {
-    // We can later add any kind of summarize logic here
-  } finally {
-    setIsProcessing(false);
-  }
-};
+    setIsProcessing(true);
+    try {
+      // We can later add any kind of summarize logic here
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
     <BaseNode
@@ -34,46 +37,37 @@ export const SummarizeNode = ({ id, data }) => {
       label="Summarizer"
       inputs={[{ id: "text" }]}
       outputs={[{ id: "summary" }]}
-      style={{
-        height: 180, 
-        width: 250,
-        backgroundColor: isProcessing ? '#f5f5f5' : 'white'
-      }}
+      icon={<FileText size={18} />}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+      <div className="flex flex-col gap-2">
         <label>
           Text:
-          <textarea
+          <TextareaAutosize
+            placeholder="Enter your text here..."
             value={text}
+            minRows={2}
+            maxRows={10}
+            className="w-full max-h-[250px] resize-none text-sm outline-none  overflow-hidden border border-slate-300  rounded overflow-y-auto  p-2 mt-1"
             onChange={handleTextChange}
-            placeholder="Enter or Paste your text here.."
-            style={{ 
-              width: "90%", 
-              padding: "4px", 
-              fontSize: "14px",
-              marginRight:"4px"
-              
-            }}
-            rows={4}
           />
-          <span style={{ fontSize: '11px', color: 'gray' }}>
+          <span className="text-xs text-gray-600" >
             {charCount} characters
           </span>
         </label>
-        <label>
+        <label className="flex flex-col">
           Summary Level:
-          <select 
-            value={level} 
+          <select
+            value={level}
             onChange={handleLevelChange}
-            style={{ marginLeft: '4px' }}
+            className="border-[1px] outline-none border-slate-500/35 rounded px-2 py-1 mt-1 w-full"
           >
             <option value="Short">Short</option>
-            <option value="Medium">Medium</option> 
+            <option value="Medium">Medium</option>
             <option value="Long">Long</option>
           </select>
         </label>
         {isProcessing && (
-          <div style={{ fontSize: '12px', color: 'blue' }}>
+          <div className="text-md">
             Generating summary...
           </div>
         )}

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { BaseNode } from "../components/BaseNode";
+import { Mail } from "lucide-react";
 
-//This node willl validate EMails
+//This node will validate EMails only as of now
 
 export const EmailValidationNode = ({ id, data }) => {
   const [email, setEmail] = useState(data?.email || "");
@@ -35,28 +36,26 @@ export const EmailValidationNode = ({ id, data }) => {
       label="Email Validator"
       inputs={[{ id: "email" }]}
       outputs={[{ id: "isValid" }, { id: "error" }]}
-      style={{
-        height: 120,
-        minWidth: 250,
+      icon={<Mail size={18} />}
       
-      }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <label>
+      <div className="flex flex-col gap-2">
+        <label className="flex flex-col">
           Email:
           <input
             type="email"
             value={email}
+            className="border-[1px] outline-none border-slate-500/35 rounded px-2 py-1 mt-1 w-full"
             onChange={handleEmailChange}
             placeholder="Enter Email"
-            style={{ width: "100%" }}
+            
           />
         </label>
         {error && (
-          <span style={{ color: "red", fontSize: "12px" }}>{error}</span>
+          <span className="text-red-600 text-xs" style={{ color: "red", fontSize: "12px" }}>{error}</span>
         )}
 
-        <div style={{ fontSize: "12px", color: isValid ? "green" : "red" }}>
+        <div className={`text-xs ${isValid ? 'text-green-600' : 'text-red-600'}`}>
           Status: {isValid ? "Valid ✓" : "Invalid ✗"}
         </div>
       </div>
